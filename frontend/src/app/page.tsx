@@ -25,6 +25,8 @@ import {
   Globe2,
   Landmark,
   LockKeyhole,
+  MessageCircle,
+  Phone,
   Scale,
   ShieldCheck,
   Star,
@@ -33,6 +35,7 @@ import {
   type LucideIcon
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AEGIS_PHONE_TEL, AEGIS_WHATSAPP_URL, trustLabels } from "@/lib/contact";
 import { getAttorneys, getPracticeAreas, getTestimonials } from "@/lib/api";
 import type { Attorney, PracticeArea, Testimonial } from "@/types";
 
@@ -214,8 +217,8 @@ export default function HomePage() {
     () => [
       "Board-level counsel",
       "Private client discretion",
-      "Enterprise PWA ready",
-      "Secure consultation intake"
+      "Under 10 minute response",
+      "Attorney-client privacy"
     ],
     []
   );
@@ -263,16 +266,35 @@ export default function HomePage() {
               discretion, and cinematic digital access for high-stakes corporate, criminal,
               intellectual property, and family office matters.
             </motion.p>
-            <motion.div variants={sectionVariants} className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <motion.div variants={sectionVariants} className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link href="/consultation" className="luxury-button w-full sm:w-auto">
                 Request Private Counsel
               </Link>
+              <a href={AEGIS_PHONE_TEL} className="conversion-pill w-full sm:w-auto">
+                <Phone className="h-4 w-4 text-amber-100" />
+                Speak With Senior Counsel
+              </a>
               <a
-                href="#practice"
-                className="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full border border-white/10 bg-white/[0.06] px-7 py-3 text-sm font-semibold uppercase tracking-[0.22em] text-white backdrop-blur-xl transition duration-700 hover:-translate-y-0.5 hover:border-amber-100/45 hover:bg-amber-200/10 sm:w-auto"
+                href={AEGIS_WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="emerald-pill w-full sm:w-auto"
               >
+                <MessageCircle className="h-4 w-4" />
+                WhatsApp Desk
+              </a>
+            </motion.div>
+
+            <motion.div
+              variants={sectionVariants}
+              className="mt-6 flex flex-wrap items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-slate-400"
+            >
+              <span className="rounded-full border border-emerald-100/20 bg-emerald-300/10 px-3 py-2 text-emerald-100">
+                Average Response Time: Under 10 Minutes
+              </span>
+              <a href="#practice" className="inline-flex items-center gap-2 transition duration-500 hover:text-amber-100">
                 Explore Expertise
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-3.5 w-3.5" />
               </a>
             </motion.div>
 
@@ -648,10 +670,26 @@ export default function HomePage() {
                   Schedule an encrypted-feeling demo consultation flow with responsive validation,
                   loading states, and a polished board-level confirmation.
                 </p>
+                <div className="mt-7 flex flex-wrap gap-2">
+                  {trustLabels.map((label) => (
+                    <span
+                      key={label}
+                      className="rounded-full border border-white/10 bg-slate-950/30 px-3 py-2 text-[0.68rem] font-bold uppercase tracking-[0.18em] text-slate-300"
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <Link href="/consultation" className="luxury-button w-full sm:w-auto">
-                Begin Consultation
-              </Link>
+              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                <Link href="/consultation" className="luxury-button w-full sm:w-auto">
+                  Begin Consultation
+                </Link>
+                <a href={AEGIS_PHONE_TEL} className="conversion-pill w-full sm:w-auto">
+                  <Phone className="h-4 w-4 text-amber-100" />
+                  Call Legal Desk
+                </a>
+              </div>
             </div>
           </div>
         </div>

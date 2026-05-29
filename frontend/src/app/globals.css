@@ -90,6 +90,26 @@ img {
   border-radius: 999px;
 }
 
+.premium-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214, 168, 79, 0.55) rgba(255, 255, 255, 0.04);
+}
+
+.premium-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(247, 231, 180, 0.72), rgba(214, 168, 79, 0.42));
+  border-radius: 999px;
+}
+
 @layer components {
   .glass-panel {
     @apply border border-white/10 bg-white/[0.052] shadow-glass backdrop-blur-2xl;
@@ -129,5 +149,13 @@ img {
 
   .premium-divider {
     @apply pointer-events-none absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-100/30 to-transparent;
+  }
+
+  .conversion-pill {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-200 backdrop-blur-xl transition duration-700 hover:-translate-y-0.5 hover:border-amber-100/40 hover:bg-amber-100/10 hover:text-amber-100;
+  }
+
+  .emerald-pill {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-emerald-100/25 bg-emerald-300/10 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-100 shadow-[0_0_42px_rgba(16,185,129,0.16)] backdrop-blur-xl transition duration-700 hover:-translate-y-0.5 hover:border-emerald-100/50 hover:bg-emerald-300/15;
   }
 }

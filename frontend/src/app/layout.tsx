@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Manrope } from "next/font/google";
+import { ConversionLayer } from "@/components/ConversionLayer";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import "./globals.css";
@@ -113,6 +114,7 @@ export default function RootLayout({
         <Navigation />
         <main>{children}</main>
         <Footer />
+        <ConversionLayer />
       </body>
     </html>
   );

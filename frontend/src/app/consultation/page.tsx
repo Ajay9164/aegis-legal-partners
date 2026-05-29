@@ -10,12 +10,15 @@ import {
   Loader2,
   LockKeyhole,
   Mail,
+  MessageCircle,
   Phone,
   ShieldCheck,
   Sparkles,
-  UserRound
+  UserRound,
+  X
 } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { AEGIS_PHONE_DISPLAY, AEGIS_PHONE_TEL, AEGIS_WHATSAPP_URL, trustLabels } from "@/lib/contact";
 import { submitConsultation } from "@/lib/api";
 import type { ConsultationPayload } from "@/types";
 
@@ -38,6 +41,7 @@ export default function ConsultationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const updateField = (field: keyof ConsultationPayload, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -61,6 +65,7 @@ export default function ConsultationPage() {
     try {
       const response = await submitConsultation(form);
       setSuccessMessage(response.message);
+      setIsSuccessModalOpen(true);
       setForm(initialForm);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Unable to schedule consultation.");
@@ -101,8 +106,8 @@ export default function ConsultationPage() {
 
           <div className="mt-10 grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
             {[
-              { icon: LockKeyhole, label: "Confidential posture" },
-              { icon: Clock, label: "24-hour response" },
+              { icon: LockKeyhole, label: "Confidential & Secure" },
+              { icon: Clock, label: "Under 10 minutes" },
               { icon: ShieldCheck, label: "Senior review" }
             ].map(({ icon: Icon, label }) => (
               <div key={label} className="glass-panel rounded-2xl p-5 transition duration-700 hover:border-amber-100/25">
@@ -112,6 +117,17 @@ export default function ConsultationPage() {
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+            <a href={AEGIS_PHONE_TEL} className="conversion-pill w-full sm:w-auto">
+              <Phone className="h-4 w-4 text-amber-100" />
+              Call Legal Desk
+            </a>
+            <a href={AEGIS_WHATSAPP_URL} target="_blank" rel="noreferrer" className="emerald-pill w-full sm:w-auto">
+              <MessageCircle className="h-4 w-4" />
+              Speak on WhatsApp
+            </a>
           </div>
         </motion.div>
 
@@ -155,8 +171,8 @@ export default function ConsultationPage() {
                   className="premium-input"
                   placeholder="Alexandra Morgan"
                   autoComplete="name"
-                required
-                maxLength={80}
+                  required
+                  maxLength={80}
                 />
               </motion.label>
 
@@ -260,9 +276,68 @@ export default function ConsultationPage() {
                 </>
               )}
             </motion.button>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {trustLabels.map((label) => (
+                <span
+                  key={label}
+                  className="rounded-full border border-white/10 bg-white/[0.045] px-3 py-2 text-[0.66rem] font-bold uppercase tracking-[0.18em] text-slate-400"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
           </form>
         </motion.div>
       </section>
+
+      <AnimatePresence>
+        {isSuccessModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[80] grid place-items-center bg-midnight/80 px-5 backdrop-blur-xl"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 28, scale: 0.96, filter: "blur(12px)" }}
+              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: 16, scale: 0.98, filter: "blur(10px)" }}
+              transition={{ duration: 0.72, ease: premiumEase }}
+              className="glass-panel relative w-full max-w-xl overflow-hidden rounded-[2.5rem] p-7 text-center sm:p-10"
+            >
+              <button
+                type="button"
+                onClick={() => setIsSuccessModalOpen(false)}
+                className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] text-slate-300 transition duration-500 hover:border-amber-100/40 hover:text-amber-100"
+                aria-label="Close success confirmation"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-emerald-100/30 bg-emerald-300/10 text-emerald-100 shadow-[0_0_58px_rgba(16,185,129,0.2)]">
+                <CheckCircle2 className="h-8 w-8" />
+              </div>
+              <p className="eyebrow mt-8">Consultation Routed</p>
+              <h2 className="mt-4 font-display text-5xl leading-[0.92] tracking-[-0.07em] text-white sm:text-6xl">
+                The Aegis board has received your matter.
+              </h2>
+              <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-slate-300">
+                {successMessage || "Consultation successfully scheduled with the Aegis legal board."}
+              </p>
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                <a href={AEGIS_PHONE_TEL} className="conversion-pill">
+                  <Phone className="h-4 w-4 text-amber-100" />
+                  Call {AEGIS_PHONE_DISPLAY}
+                </a>
+                <a href={AEGIS_WHATSAPP_URL} target="_blank" rel="noreferrer" className="emerald-pill">
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp Counsel
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,5 +1,18 @@
 import Link from "next/link";
-import { ArrowUpRight, Instagram, Linkedin, Mail, MapPin, Phone, Scale, Twitter } from "lucide-react";
+import {
+  ArrowUpRight,
+  CalendarCheck,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Scale,
+  ShieldCheck,
+  Twitter
+} from "lucide-react";
+import { AEGIS_PHONE_DISPLAY, AEGIS_PHONE_TEL, AEGIS_WHATSAPP_URL } from "@/lib/contact";
 
 const footerLinks = ["Corporate Law", "M&A", "Intellectual Property", "Criminal Defense", "Private Wealth"];
 
@@ -26,6 +39,16 @@ export function Footer() {
               A cinematic legal platform for executive counsel, private wealth protection,
               enterprise transactions, and high-discretion advocacy.
             </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link href="/consultation" className="luxury-button w-full sm:w-auto">
+                <CalendarCheck className="mr-2 h-4 w-4" />
+                Schedule Confidential Consultation
+              </Link>
+              <a href={AEGIS_PHONE_TEL} className="conversion-pill w-full sm:w-auto">
+                <Phone className="h-4 w-4 text-amber-100" />
+                Call Legal Desk
+              </a>
+            </div>
             <div className="mt-8 flex items-center gap-3">
               {[
                 { icon: Linkedin, label: "LinkedIn" },
@@ -69,14 +92,37 @@ export function Footer() {
               </p>
               <p className="flex gap-3">
                 <Phone className="mt-1 h-4 w-4 shrink-0 text-amber-200" />
-                +1 (212) 555-0148
+                <a href={AEGIS_PHONE_TEL} className="transition duration-500 hover:text-amber-100">
+                  {AEGIS_PHONE_DISPLAY}
+                </a>
               </p>
               <p className="flex gap-3">
                 <Mail className="mt-1 h-4 w-4 shrink-0 text-amber-200" />
                 concierge@aegislegal.example
               </p>
+              <p className="flex gap-3">
+                <MessageCircle className="mt-1 h-4 w-4 shrink-0 text-emerald-200" />
+                <a
+                  href={AEGIS_WHATSAPP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition duration-500 hover:text-emerald-100"
+                >
+                  Connect Privately via WhatsApp
+                </a>
+              </p>
+              <p className="flex gap-3">
+                <ShieldCheck className="mt-1 h-4 w-4 shrink-0 text-amber-200" />
+                Private Consultations Available 24/7
+              </p>
             </div>
           </div>
+        </div>
+
+        <div className="mt-12 rounded-[2rem] border border-white/10 bg-white/[0.035] p-5 text-xs leading-6 text-slate-500">
+          <span className="font-bold uppercase tracking-[0.24em] text-slate-400">Legal Disclaimer:</span>{" "}
+          This premium demo experience provides simulated intake guidance only and does not
+          create an attorney-client relationship until a formal engagement is confirmed by counsel.
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-8 text-[0.68rem] uppercase leading-6 tracking-[0.24em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
